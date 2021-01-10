@@ -1,17 +1,22 @@
 package test.com.icosahedron
 
-import com.icosahedron.CountKt
+import com.icosahedron.Count
 import spock.lang.Specification
 
 final class CountSpec extends Specification {
-    def "test"() {
+    def countType = BigInteger
+
+    def "Count using BigInteger"() {
         given:
-        def count = CountKt.valueOf(31)
+        def value = 31
 
-        expect:
-        println count
+        when:
+        def count = Count.of(value.toInteger())
 
-        and:
-        println 'hello'
+        then:
+        count.class == countType
+        count == countType.valueOf(value)
+        println count.toString()
+        count.toString() == value.toString()
     }
 }

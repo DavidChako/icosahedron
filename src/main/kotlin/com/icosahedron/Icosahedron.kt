@@ -1,14 +1,13 @@
 package com.icosahedron
 
-//import java.math.BigInteger
-//typealias Count = BigInteger
+import java.math.BigInteger as Count
 
-typealias Count = Long
-fun Long.Companion.valueOf(value: Long) = value
-fun Long.Companion.valueOf(value: Int) = value.toLong()
+//import kotlin.Long as Count
+//fun Count.Companion.valueOf(value: Count) = value
+//fun Count.Companion.valueOf(value: Int) = value.toLong()
 
-val foobar = Count.valueOf(1)
-val barfoo = Count.valueOf(100L)
+val foobar: Count = Count.valueOf(1)
+val barfoo = Count.of(100L)
 val sum = foobar + barfoo
 
 fun main() {
