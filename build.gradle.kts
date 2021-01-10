@@ -1,8 +1,8 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("jvm") version "1.6.10"
-//    groovy
-//    java
-//    jacoco
+    kotlin("jvm") version "1.4.21"
+    groovy
 }
 
 group = "com.icosahedron"
@@ -13,10 +13,16 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.10")
-    implementation("ch.qos.logback:logback-core:1.2.3")
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.spockframework:spock-core:2.0-M3-groovy-3.0")
 }
+
+tasks.withType<KotlinCompile>() {
+    kotlinOptions.jvmTarget = "1.8"
+    //kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
+}
+
+//kotlin {
+//    sourceSets.all {
+//        //languageSettings.enableLanguageFeature("InlineClasses")
+//    }
+//}
