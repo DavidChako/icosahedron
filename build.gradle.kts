@@ -21,8 +21,8 @@ tasks.withType<KotlinCompile>() {
     //kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
 }
 
-//kotlin {
-//    sourceSets.all {
-//        //languageSettings.enableLanguageFeature("InlineClasses")
-//    }
-//}
+kotlin {
+    sourceSets.all {
+        languageSettings.enableLanguageFeature("InlineClasses")
+    }
+}
