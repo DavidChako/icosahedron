@@ -1,7 +1,5 @@
 package com.icosahedron
 
-//import com.icosahedron.BigIntegerCount as Count
-
 fun main() {
     val foobar = Count(1)
     val barfoo = Count(10L)
