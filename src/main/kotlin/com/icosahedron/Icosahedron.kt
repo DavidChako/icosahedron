@@ -1,7 +1,6 @@
 package com.icosahedron
 
 //import com.icosahedron.BigIntegerCount as Count
-import com.icosahedron.LongCount as Count
 
 fun main() {
     val foobar = Count(1)
