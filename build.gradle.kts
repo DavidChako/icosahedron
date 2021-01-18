@@ -23,6 +23,6 @@ tasks.withType<KotlinCompile>() {
 
 kotlin {
     sourceSets.all {
-        languageSettings.enableLanguageFeature("InlineClasses")
+        //languageSettings.enableLanguageFeature("InlineClasses")
     }
 }
