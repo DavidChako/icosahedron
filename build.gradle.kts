@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.4.32"
     groovy
 }
 
@@ -21,8 +21,8 @@ tasks.withType<KotlinCompile>() {
     //kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
 }
 
-kotlin {
-    sourceSets.all {
-        //languageSettings.enableLanguageFeature("InlineClasses")
-    }
-}
+//kotlin {
+//    sourceSets.all {
+//        //languageSettings.enableLanguageFeature("InlineClasses")
+//    }
+//}
