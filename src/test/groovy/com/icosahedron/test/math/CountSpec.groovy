@@ -14,4 +14,9 @@ final class CountSpec extends Specification {
         and:
         println 'hello'
     }
+
+    def "test2"() {
+        expect:
+        println 'hello2'
+    }
 }
