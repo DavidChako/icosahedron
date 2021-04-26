@@ -5,6 +5,7 @@ import com.icosahedron.format.Format
 fun main() {
     println("Hello Math!")
     printFibonnaciNumbers()
+    println("Goodbye Math!")
 }
 
 fun printFibonnaciNumbers() {
