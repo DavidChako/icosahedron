@@ -48,7 +48,7 @@ fun main() {
 //    }
 //    println(myString)
 
-//    val name: String = File("/Users/davidchako/codes/icosahedron/src/main/resources/NameInput.txt").readText()
+//    val name: String = File("/Users/davidchako/codes/icosahedron/src/main/resources/explore/strings/NameInput.txt").readText()
 //    val name: String? = readLine()
 //    val name = "David"
 //    val name = """
