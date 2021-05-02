@@ -10,7 +10,6 @@ plugins {
 
 group = "com.icosahedron"
 version = "1.0-SNAPSHOT"
-//java.sourceCompatibility = JavaVersion.VERSION_11
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
@@ -24,18 +23,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("com.h2database:h2")
-//    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.spockframework:spock-core:2.0-M3-groovy-3.0")
 }
 
 tasks.withType<KotlinCompile>() {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        //jvmTarget = "11"
         jvmTarget = "1.8"
     }
 }
-
-//tasks.withType<Test> {
-//    useJUnitPlatform()
-//}
