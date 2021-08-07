@@ -1,15 +1,14 @@
 package com.icosahedron.math
 
-import java.math.BigInteger
-
-data class Count(val count: BigInteger) {
+data class Count(val count: Long) {
     init {
-        require(count.signum() != -1) {
+        require(count >= 0) {
             "Invalid count: $count"
         }
     }
 
-    constructor(count: Int): this(count.toBigInteger())
-    constructor(count: Long): this(count.toBigInteger())
+    constructor(count: Int): this(count.toLong())
     override fun toString() = count.toString()
+    fun increment() = Count(count + 1)
+    fun minus(rhs: Count) = Count(count - rhs.count)
 }
