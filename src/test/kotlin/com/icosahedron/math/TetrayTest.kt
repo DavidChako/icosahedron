@@ -18,7 +18,7 @@ class TetrayTest {
     }
 
     @Test fun `construct from Ints`() {
-        val coordinates = RandomGen.intArray(4)
+        val coordinates = RandomGen.intCountArray(4)
         val actualTetray = Tetray(coordinates[0], coordinates[1], coordinates[2], coordinates[3])
         val expectedTetray = Tetray(coordinates.map { it.toULong() }.toTypedArray())
         assertEquals(expectedTetray, actualTetray)

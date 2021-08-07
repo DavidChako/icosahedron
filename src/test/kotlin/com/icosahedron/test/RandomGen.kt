@@ -8,10 +8,10 @@ object RandomGen {
     fun intCount() = intCount(Int.MAX_VALUE)
     fun intCount(upperBound: Int) = intCount(0, upperBound)
     fun intCount(lowerValue: Int, upperBound: Int) = Random.nextInt(lowerValue, upperBound)
-    fun intArray(size: Int) = Array(size) { intCount() }
+    fun intCountArray(size: Int) = Array(size) { intCount() }
 
-    fun uLongCount() = uLongCount(ULong.MAX_VALUE)
-    fun uLongCount(upperBound: ULong) = uLongCount(0UL, upperBound)
-    fun uLongCount(lowerValue: ULong, upperBound: ULong) = Random.nextULong(lowerValue, upperBound)
-    fun uLongArray(size: Int) = Array(size) { uLongCount() }
+    fun uLong() = uLong(ULong.MAX_VALUE)
+    fun uLong(upperBound: ULong) = uLong(0UL, upperBound)
+    fun uLong(lowerValue: ULong, upperBound: ULong) = Random.nextULong(lowerValue, upperBound)
+    fun uLongArray(size: Int) = Array(size) { uLong() }
 }
