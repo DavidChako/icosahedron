@@ -1,5 +1,6 @@
 package com.icosahedron.math
 
+import com.icosahedron.math.tetray.Tetray
 import com.icosahedron.test.GenerateRandom
 import kotlin.test.Test
 import kotlin.test.assertEquals
