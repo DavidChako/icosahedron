@@ -1,7 +1,6 @@
-package com.icosahedron.test
+package com.icosahedron.math.arithmetic
 
-import com.icosahedron.math.Count
-import com.icosahedron.math.Tetray
+import com.icosahedron.math.geometry.tetrahedral.Tetray
 import kotlin.random.Random
 
 object Arbitrary {

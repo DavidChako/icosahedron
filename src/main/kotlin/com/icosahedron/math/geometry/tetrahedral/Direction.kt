@@ -1,4 +1,6 @@
-package com.icosahedron.math
+package com.icosahedron.math.geometry.tetrahedral
+
+import com.icosahedron.math.arithmetic.Count
 
 enum class Direction {
     W {

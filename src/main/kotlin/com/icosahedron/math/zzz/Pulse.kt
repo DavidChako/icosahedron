@@ -1,4 +1,4 @@
-package com.icosahedron.math
+package com.icosahedron.math.zzz
 
 enum class Pulse {
     INWARD,

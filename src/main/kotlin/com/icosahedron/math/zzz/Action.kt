@@ -1,6 +1,4 @@
-package com.icosahedron.math.action
-
-import com.icosahedron.math.Pulse
+package com.icosahedron.math.zzz
 
 sealed interface Action {
     fun pulse(): Pulse

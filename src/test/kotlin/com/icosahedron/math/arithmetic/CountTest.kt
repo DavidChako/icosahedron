@@ -1,6 +1,5 @@
-package com.icosahedron.math
+package com.icosahedron.math.arithmetic
 
-import com.icosahedron.test.Arbitrary
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith

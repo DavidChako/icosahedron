@@ -1,4 +1,4 @@
-package com.icosahedron.math
+package com.icosahedron.math.zzz
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

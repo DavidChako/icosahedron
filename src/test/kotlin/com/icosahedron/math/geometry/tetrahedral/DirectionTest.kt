@@ -1,6 +1,6 @@
-package com.icosahedron.math
+package com.icosahedron.math.geometry.tetrahedral
 
-import com.icosahedron.test.Arbitrary
+import com.icosahedron.math.arithmetic.Arbitrary
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
