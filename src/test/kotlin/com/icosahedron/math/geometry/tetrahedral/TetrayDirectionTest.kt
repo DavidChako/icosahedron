@@ -4,15 +4,15 @@ import com.icosahedron.math.arithmetic.Arbitrary
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class DirectionTest {
+class TetrayDirectionTest {
     @Test fun `available directions`() {
-        assertEquals(listOf(Direction.W, Direction.X, Direction.Y, Direction.Z), Direction.values().toList())
+        assertEquals(listOf(TetrayDirection.W, TetrayDirection.X, TetrayDirection.Y, TetrayDirection.Z), TetrayDirection.values().toList())
     }
 
     @Test fun `project tetray`() {
         val tetray = Arbitrary.tetray()
         val expectedProjections = listOf(tetray.w, tetray.x, tetray.y, tetray.z)
-        val actualProjections = Direction.values().map { it.project(tetray) }
+        val actualProjections = TetrayDirection.values().map { it.project(tetray) }
         assertEquals(expectedProjections, actualProjections)
     }
 
@@ -24,7 +24,7 @@ class DirectionTest {
             Tetray(tetray.w, tetray.x, tetray.y.plusOne(), tetray.z),
             Tetray(tetray.w, tetray.x, tetray.y, tetray.z.plusOne()),
         )
-        val actualLocations = Direction.values().map { it.move(tetray) }
+        val actualLocations = TetrayDirection.values().map { it.move(tetray) }
         assertEquals(expectedLocations, actualLocations)
     }
 }

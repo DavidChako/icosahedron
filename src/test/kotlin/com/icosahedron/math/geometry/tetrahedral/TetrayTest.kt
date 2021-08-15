@@ -29,14 +29,14 @@ class TetrayTest {
 
     @Test fun `coordinate in direction`() {
         val tetray = Arbitrary.tetray()
-        Direction.values().forEach { direction ->
+        TetrayDirection.values().forEach { direction ->
             assertEquals(direction.project(tetray), tetray.coordinate(direction))
         }
     }
 
     @Test fun `next in direction`() {
         val tetray = Arbitrary.tetray()
-        Direction.values().forEach { direction ->
+        TetrayDirection.values().forEach { direction ->
             assertEquals(direction.move(tetray), tetray.next(direction))
         }
     }

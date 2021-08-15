@@ -2,7 +2,7 @@ package com.icosahedron.math.geometry.tetrahedral
 
 import com.icosahedron.math.arithmetic.Count
 
-enum class Direction {
+enum class TetrayDirection {
     W {
         override fun project(tetray: Tetray) = tetray.w
         override fun move(tetray: Tetray) = Tetray(tetray.w.plusOne(), tetray.x, tetray.y, tetray.z)
