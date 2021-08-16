@@ -5,26 +5,26 @@ import com.icosahedron.math.arithmetic.Arbitrary
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class TetrayTest {
-    private val w = Arbitrary.count()
-    private val x = Arbitrary.count()
-    private val y = Arbitrary.count()
-    private val z = Arbitrary.count()
-
+class TetrayVectorTest {
     @Test fun `construct from Ints`() {
-        val wi = Arbitrary.wholeInt()
-        val xi = Arbitrary.wholeInt()
-        val yi = Arbitrary.wholeInt()
-        val zi = Arbitrary.wholeInt()
-        assertEquals(Tetray(Count(wi), Count(xi), Count(yi), Count(zi)), Tetray(wi, xi, yi, zi))
+        val h = Arbitrary.wholeInt()
+        val i = Arbitrary.wholeInt()
+        val j = Arbitrary.wholeInt()
+        val k = Arbitrary.wholeInt()
+        val expected = TetrayVector(Count(h), Count(i), Count(j), Count(k))
+        assertEquals(expected, TetrayVector(h, i, j, k))
     }
 
     @Test fun `to string`() {
-        assertEquals("$w:$x:$y:$z", Tetray(w, x, y, z).toString())
+        val tetray = Arbitrary.tetray()
+        val expected = "${tetray.w}:${tetray.x}:${tetray.y}:${tetray.z}"
+        assertEquals(expected, tetray.toString())
     }
 
     @Test fun `get shell`() {
-        assertEquals(w + x + y + z, Tetray(w, x, y, z).shell)
+        val tetray = Arbitrary.tetray()
+        val expected = tetray.w + tetray.x + tetray.y + tetray.z
+        assertEquals(expected, tetray.shell)
     }
 
     @Test fun `coordinate in direction`() {

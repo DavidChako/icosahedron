@@ -6,25 +6,24 @@ import kotlin.test.assertEquals
 
 class TetrayDirectionTest {
     @Test fun `available directions`() {
-        assertEquals(listOf(TetrayDirection.W, TetrayDirection.X, TetrayDirection.Y, TetrayDirection.Z), TetrayDirection.values().toList())
+        val expected = listOf(TetrayDirection.W, TetrayDirection.X, TetrayDirection.Y, TetrayDirection.Z)
+        assertEquals(expected, TetrayDirection.values().toList())
     }
 
     @Test fun `project tetray`() {
         val tetray = Arbitrary.tetray()
-        val expectedProjections = listOf(tetray.w, tetray.x, tetray.y, tetray.z)
-        val actualProjections = TetrayDirection.values().map { it.project(tetray) }
-        assertEquals(expectedProjections, actualProjections)
+        val expected = listOf(tetray.w, tetray.x, tetray.y, tetray.z)
+        assertEquals(expected, TetrayDirection.values().map { it.project(tetray) })
     }
 
     @Test fun `move tetray`() {
         val tetray = Arbitrary.tetray()
-        val expectedLocations = listOf(
-            Tetray(tetray.w.plusOne(), tetray.x, tetray.y, tetray.z),
-            Tetray(tetray.w, tetray.x.plusOne(), tetray.y, tetray.z),
-            Tetray(tetray.w, tetray.x, tetray.y.plusOne(), tetray.z),
-            Tetray(tetray.w, tetray.x, tetray.y, tetray.z.plusOne()),
+        val expected = listOf(
+            TetrayVector(tetray.w.plusOne(), tetray.x, tetray.y, tetray.z),
+            TetrayVector(tetray.w, tetray.x.plusOne(), tetray.y, tetray.z),
+            TetrayVector(tetray.w, tetray.x, tetray.y.plusOne(), tetray.z),
+            TetrayVector(tetray.w, tetray.x, tetray.y, tetray.z.plusOne()),
         )
-        val actualLocations = TetrayDirection.values().map { it.move(tetray) }
-        assertEquals(expectedLocations, actualLocations)
+        assertEquals(expected, TetrayDirection.values().map { it.move(tetray) })
     }
 }
