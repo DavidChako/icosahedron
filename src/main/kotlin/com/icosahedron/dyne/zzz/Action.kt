@@ -1,4 +1,4 @@
-package com.icosahedron.math.zzz
+package com.icosahedron.dyne.zzz
 
 sealed interface Action {
     fun pulse(): Pulse
