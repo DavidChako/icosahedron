@@ -1,7 +1,8 @@
 package com.icosahedron.dyne
 
 data class Tetray(private var x0: ULong, private var x1: ULong, private var x2: ULong, private var x3: ULong) {
-    private var shell = x0 + x1 + x2 + x3
+    var shell = x0 + x1 + x2 + x3
+        private set
         get() = field
 
     constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(x0.toULong(), x1.toULong(), x2.toULong(), x3.toULong())
@@ -10,20 +11,20 @@ data class Tetray(private var x0: ULong, private var x1: ULong, private var x2: 
 
     operator fun get(i: Int) = coordinate(i).get()
 
-    fun increment(i: Int): ULong {
+    fun increment(i: Int): Tetray {
         val coordinate = coordinate(i)
         val result = coordinate.get() + 1UL
         coordinate.set(result)
         shell++
-        return result
+        return this
     }
 
-    fun decrement(i: Int): ULong {
+    fun decrement(i: Int): Tetray {
         val coordinate = coordinate(i)
         val result = coordinate.get() - 1UL
         coordinate.set(result)
         shell--
-        return result
+        return this
     }
 
     private fun coordinate(i: Int) = when (i) {

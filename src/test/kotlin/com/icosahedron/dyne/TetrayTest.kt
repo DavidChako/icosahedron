@@ -4,74 +4,117 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TetrayTest {
-//        private var shell = x0 + x1 + x2 + x3
-//            get() = field
-//
-//        constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(x0.toULong(), x1.toULong(), x2.toULong(), x3.toULong())
-//
-//        override fun toString() = "$x0:$x1:$x2:$x3"
-//
-//        operator fun get(i: Int) = coordinate(i).get()
-//
-//        fun increment(i: Int): ULong {
-//            val coordinate = coordinate(i)
-//            val result = coordinate.get() + 1UL
-//            coordinate.set(result)
-//            shell++
-//            return result
-//        }
-//
-//        fun decrement(i: Int): ULong {
-//            val coordinate = coordinate(i)
-//            val result = coordinate.get() - 1UL
-//            coordinate.set(result)
-//            shell--
-//            return result
-//        }
-//
-//        private fun coordinate(i: Int) = when (i) {
-//            0 -> this::x0
-//            1 -> this::x1
-//            2 -> this::x2
-//            3 -> this::x3
-//            else -> throw ArrayIndexOutOfBoundsException(i)
-//        }
-
     @Test fun `construct from ULongs`() {
-        val x0 = Arbitrary.ulong()
-        val x1 = Arbitrary.ulong()
-        val x2 = Arbitrary.ulong()
-        val x3 = Arbitrary.ulong()
+        // given
+        val x0 = Arbitrary.unsignedLong()
+        val x1 = Arbitrary.unsignedLong()
+        val x2 = Arbitrary.unsignedLong()
+        val x3 = Arbitrary.unsignedLong()
         val tetray = Tetray(x0, x1, x2, x3)
+
+        // when
+        val actual = listOf(tetray[0], tetray[1], tetray[2], tetray[3])
+
+        // then
+        val expected = listOf(x0, x1, x2, x3)
+        assertEquals(expected, actual)
+    }
+
+    @Test fun `construct from Ints`() {
+        // given
+        val x0 = Arbitrary.integer()
+        val x1 = Arbitrary.integer()
+        val x2 = Arbitrary.integer()
+        val x3 = Arbitrary.integer()
+
+        // when
+        val actual = Tetray(x0, x1, x2, x3)
+
+        // then
+        val expected = Tetray(x0.toULong(), x1.toULong(), x2.toULong(), x3.toULong())
+        assertEquals(expected, actual)
+    }
+
+    @Test fun `to string`() {
+        // given
+        val tetray = Arbitrary.tetray()
+
+        // when
+        val actual = tetray.toString()
+
+        // then
+        val expected = "${tetray[0]}:${tetray[1]}:${tetray[2]}:${tetray[3]}"
+        assertEquals(expected, actual)
+    }
+
+    @Test fun `get shell`() {
+        // given
+        val tetray = Arbitrary.tetray()
+
+        // when
+        val actual = tetray.shell
+
+        // then
+        val expected = tetray[0] + tetray[1] + tetray[2] + tetray[3]
+        assertEquals(expected, actual)
+    }
+
+    @Test fun `get coordinate`() {
+        // given
+        val x0 = Arbitrary.unsignedLong()
+        val x1 = Arbitrary.unsignedLong()
+        val x2 = Arbitrary.unsignedLong()
+        val x3 = Arbitrary.unsignedLong()
+
+        // when
+        val tetray = Tetray(x0, x1, x2, x3)
+
+        // then
         assertEquals(x0, tetray[0])
         assertEquals(x1, tetray[1])
         assertEquals(x2, tetray[2])
         assertEquals(x3, tetray[3])
     }
 
-    @Test fun `to string`() {
-        val tetray = Arbitrary.tetray()
-        val expected = "${tetray.w}:${tetray.x}:${tetray.y}:${tetray.z}"
-        assertEquals(expected, tetray.toString())
+    @Test fun `increment coordinate`() {
+        // given
+        val x0 = Arbitrary.unsignedLong()
+        val x1 = Arbitrary.unsignedLong()
+        val x2 = Arbitrary.unsignedLong()
+        val x3 = Arbitrary.unsignedLong()
+        val initial = List(4) { Tetray(x0, x1, x2, x3) }
+
+        // when
+        val actual = initial.mapIndexed { index, tetray -> tetray.increment(index) }
+
+        // expect
+        val expected = listOf(
+            Tetray(x0 + 1UL, x1, x2, x3),
+            Tetray(x0, x1 + 1UL, x2, x3),
+            Tetray(x0 , x1, x2 + 1UL, x3),
+            Tetray(x0, x1, x2, x3 + 1UL),
+        )
+        assertEquals(expected, actual)
     }
 
-    @Test fun `get shell`() {
-        val tetray = Arbitrary.tetray()
-        val expected = tetray.w + tetray.x + tetray.y + tetray.z
-        assertEquals(expected, tetray.shell)
-    }
+    @Test fun `decrement coordinate`() {
+        // given
+        val x0 = Arbitrary.unsignedLong() + 1UL
+        val x1 = Arbitrary.unsignedLong() + 1UL
+        val x2 = Arbitrary.unsignedLong() + 1UL
+        val x3 = Arbitrary.unsignedLong() + 1UL
+        val initial = List(4) { Tetray(x0, x1, x2, x3) }
 
-    @Test fun `coordinate in direction`() {
-        val tetray = Arbitrary.tetray()
-        Direction.values().forEach { direction ->
-            assertEquals(direction.project(tetray), tetray.coordinate(direction))
-        }
-    }
+        // when
+        val actual = initial.mapIndexed { index, tetray -> tetray.decrement(index) }
 
-    @Test fun `next in direction`() {
-        val tetray = Arbitrary.tetray()
-        Direction.values().forEach { direction ->
-            assertEquals(direction.move(tetray), tetray.next(direction))
-        }
+        // expect
+        val expected = listOf(
+            Tetray(x0 - 1UL, x1, x2, x3),
+            Tetray(x0, x1 - 1UL, x2, x3),
+            Tetray(x0 , x1, x2 - 1UL, x3),
+            Tetray(x0, x1, x2, x3 - 1UL),
+        )
+        assertEquals(expected, actual)
     }
 }
