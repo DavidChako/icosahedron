@@ -1,38 +1,32 @@
 package com.icosahedron.dyne
 
-class Tetray private constructor(private val array: Array<ULong>) {
-    var shell = array.sum()
-        private set
+data class Tetray constructor(val x0: Count, val x1: Count, val x2: Count, val x3: Count) {
+    constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(Count(x0), Count(x1), Count(x2), Count(x3))
 
-    constructor(x0: ULong, x1: ULong, x2: ULong, x3: ULong): this(arrayOf(x0, x1, x2, x3))
+    fun shell() = x0 + x1 + x2 + x3
+    override fun toString() = "$x0:$x1:$x2:$x3"
 
-    constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(x0.toULong(), x1.toULong(), x2.toULong(), x3.toULong())
-
-    operator fun get(i: Int) = array[i]
-
-    fun increment(i: Int): Tetray {
-        require(array[i] < ULong.MAX_VALUE)
-        array[i] = array[i] + 1UL
-        shell += 1UL
-        return this
+    operator fun get(i: Int) = when (i) {
+        0 -> x0
+        1 -> x1
+        2 -> x2
+        3 -> x3
+        else -> throw ArrayIndexOutOfBoundsException(i.toString())
     }
 
-    fun decrement(i: Int): Tetray {
-        require(array[i] > ULong.MIN_VALUE)
-        array[i] = array[i] - 1UL
-        shell -= 1UL
-        return this
+    fun increment(i: Int)  = when (i) {
+        0 -> Tetray(x0.plusOne(), x1, x2, x3)
+        1 -> Tetray(x0, x1.plusOne(), x2, x3)
+        2 -> Tetray(x0, x1, x2.plusOne(), x3)
+        3 -> Tetray(x0, x1, x2, x3.plusOne())
+        else -> throw ArrayIndexOutOfBoundsException(i.toString())
     }
 
-    override fun toString() = array.joinToString(":")
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        return array.contentEquals((other as Tetray).array)
-    }
-
-    override fun hashCode(): Int {
-        return array.contentHashCode()
+    fun decrement(i: Int)  = when (i) {
+        0 -> Tetray(x0.minusOne(), x1, x2, x3)
+        1 -> Tetray(x0, x1.minusOne(), x2, x3)
+        2 -> Tetray(x0, x1, x2.minusOne(), x3)
+        3 -> Tetray(x0, x1, x2, x3.minusOne())
+        else -> throw ArrayIndexOutOfBoundsException(i.toString())
     }
 }
