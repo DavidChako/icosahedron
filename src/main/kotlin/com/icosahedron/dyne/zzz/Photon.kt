@@ -1,6 +1,6 @@
 package com.icosahedron.dyne.zzz
 
-import com.icosahedron.dyne.Tetray
+import com.icosahedron.dyne.CountTetray
 
-data class Photon(val location: Tetray) {
+data class Photon(val location: CountTetray) {
 }
