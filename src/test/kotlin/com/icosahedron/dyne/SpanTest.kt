@@ -1,83 +1,50 @@
 package com.icosahedron.dyne
 
-class Explore {
-}
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-package icosahedron.dspace.explore
-
-import com.icosahedron.dyne.explore.Actor
-import com.icosahedron.dyne.explore.Pole
-import com.icosahedron.dyne.explore.Scenario
-import spock.lang.Specification
-
-final class ExploreSpec extends Specification {
-    def "explore"() {
-        given:
-        int[] initialAnchorLocation = [ 10, 10, 10, 10 ]
-        int[] initialAnchorInertia = [ 10, 10, 10, 10 ]
-        Actor anchor = new Actor(initialAnchorLocation, initialAnchorInertia)
-
-        int[] initialMastLocation = [ 20, 10, 10, 0 ]
-        int[] initialMastInertia = [ 10, 10, 10, 10 ]
-        Actor mast = new Actor(initialMastLocation, initialMastInertia)
-
-        Pole pole = new Pole(anchor, mast)
-        int runCount = 1000000
-        int stepCount = 20
-        Scenario scenario = new Scenario(pole, runCount, stepCount)
-        int randomSeed = 0
-        def random = new Random(randomSeed)
-
-        when:
-        scenario.run()
-
-        then:
-        scenario.printDistanceByTime(System.out)
-    }
-
-    def "max shell count assuming indexing from 0 to Long.MAX_VALUE"() {
-        given:
-        long sum = 1
-        int shellCount = 0
-
-        when:
-        while (sum > 0) {
-            long addend = 10*shellCount*shellCount + 2
-
-            if ((sum + addend) > 0) {
-                sum += addend
-                shellCount++
-            }
-
-            if (shellCount % 1000000 == 0) {
-                println 'shell count ' + shellCount + ', remainder ' + (Long.MAX_VALUE - sum)
-            }
-        }
-
-        then:
-        println 'shell count ' + shellCount + ', remainder ' + (Long.MAX_VALUE - sum)
-    }
-
-    def "shell count vs. memory footprint, assuming the pressure at each sphere center is represented by a long value"() {
-        given:
-        double maxMemoryFootprintBytes = 2.0e7
-        int shellCount = 0
-        long pointCount = 0
-        double memoryFootprintBytes = 0
-
-        when:
-        while (memoryFootprintBytes < maxMemoryFootprintBytes) {
-            println 'shell count ' + shellCount + ', point count ' + pointCount + ', memory footprint ' + memoryFootprintBytes / 1024000 + ' MB'
-            int pointAddend = 10*shellCount*shellCount + 2
-            shellCount++
-            pointCount += pointAddend
-            memoryFootprintBytes += 8 * pointAddend
-        }
-
-        then:
-        println 'max shell count ' + shellCount + ', point count ' + pointCount + ', memory footprint ' + memoryFootprintBytes / 1024000 + ' MB'
+class SpanTest {
+    @Test fun `monte carlo span evolution in absence of force`() {
+//        val originEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))
+//        val endpointEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))
+//        val span = Span(originEvent, endpointEvent)
+//        val runCount = 1000
+//        val stepCount = 20
+        val monteCarlo = SpanMonteCarlo()
+        monteCarlo.testLogging("hello there")
+        assertEquals(true, true)
     }
 }
+
+//final class ExploreSpec extends Specification {
+//    def "explore"() {
+//        given:
+//        int[] initialAnchorLocation = [ 10, 10, 10, 10 ]
+//        int[] initialAnchorInertia = [ 10, 10, 10, 10 ]
+//        Actor anchor = new Actor(initialAnchorLocation, initialAnchorInertia)
+//
+//        int[] initialMastLocation = [ 20, 10, 10, 0 ]
+//        int[] initialMastInertia = [ 10, 10, 10, 10 ]
+//        Actor mast = new Actor(initialMastLocation, initialMastInertia)
+//
+//        Pole pole = new Pole(anchor, mast)
+//        int runCount = 1000000
+//        int stepCount = 20
+//        OldScenario scenario = new OldScenario(
+//            pole,
+//            runCount,
+//            stepCount
+//        )
+//        int randomSeed = 0
+//        def random = new Random(randomSeed)
+//
+//        when:
+//        scenario.run()
+//
+//        then:
+//        scenario.printDistanceByTime(System.out)
+//    }
+//}
 
 //0 --> [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 //1 --> [0, 0, 0, 0, 0, 0, 0, 0, 0, 72589, 510567, 416844, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
