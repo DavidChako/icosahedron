@@ -3,7 +3,7 @@ package com.icosahedron.dyne
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class SpanTest {
+class PoleTest {
     @Test fun `monte carlo span evolution in absence of force`() {
 //        val originEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))
 //        val endpointEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))

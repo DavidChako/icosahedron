@@ -3,7 +3,7 @@ package com.icosahedron.dyne
 import java.math.BigInteger
 import java.util.*
 
-data class Span(val origin: Event, val endpoint: Event) {
+data class Pole(val origin: Event, val endpoint: Event) {
     companion object {
         val TWO = BigInteger.valueOf(2)
 
