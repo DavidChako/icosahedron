@@ -1,18 +1,16 @@
 package com.icosahedron.dyne
 
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class PoleTest {
-    @Test fun `monte carlo span evolution in absence of force`() {
-//        val originEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))
-//        val endpointEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))
-//        val span = Span(originEvent, endpointEvent)
-//        val runCount = 1000
-//        val stepCount = 20
-        val monteCarlo = SpanMonteCarlo()
-        monteCarlo.testLogging("hello there")
-        assertEquals(true, true)
+    @Test fun `monte carlo pole evolution in absence of force`() {
+        val originEvent = Event(Tetray(10, 10, 10, 10), Tetray(10, 10, 10, 10))
+        val endpointEvent = Event(Tetray(20, 10, 10, 0), Tetray(10, 10, 10, 10))
+        val pole = Pole(originEvent, endpointEvent)
+        val runCount = 1000000
+        val stepCount = 20
+        val monteCarlo = PoleMonteCarlo(pole, runCount, stepCount)
+        monteCarlo.run()
     }
 }
 

@@ -5,7 +5,7 @@ import java.util.*
 
 data class Pole(val origin: Event, val endpoint: Event) {
     companion object {
-        val TWO = BigInteger.valueOf(2)
+        val TWO: BigInteger = BigInteger.valueOf(2)
 
         fun pick(bound: BigInteger, random: Random = Random()): BigInteger {
             val candidate = BigInteger(bound.bitLength(), random)
@@ -20,16 +20,14 @@ data class Pole(val origin: Event, val endpoint: Event) {
 
     private val ray = Array(4) { n -> endpoint.location[n] - origin.location[n] }
 
-    fun radius() = ray.sumOf{ it.abs() }.divide(TWO)
-
-    fun step(random: Random = Random()): BigInteger {
+    fun step(random: Random = Random()): Int {
         val bound = origin.frequency() * endpoint.frequency()
         var discriminant = pick(bound, random)
 
-        origin.inertia.forEachIndexed { originDirection, originFactor ->
-            endpoint.inertia.forEachIndexed { endpointDirection, endpointFactor ->
+        origin.inertia.forEachIndexed { originMove, originFactor ->
+            endpoint.inertia.forEachIndexed { endpointMove, endpointFactor ->
                 val contribution = originFactor * endpointFactor
-                if (discriminant < contribution) return step(originDirection, endpointDirection)
+                if (discriminant < contribution) return step(originMove, endpointMove)
                 discriminant -= contribution
             }
         }
@@ -37,11 +35,14 @@ data class Pole(val origin: Event, val endpoint: Event) {
         throw IllegalStateException()
     }
 
-    fun step(originDirection: Int, endpointDirection: Int): BigInteger {
-        origin.location.increment(originDirection)
-        endpoint.location.increment(endpointDirection)
-        ray[originDirection]--
-        ray[endpointDirection]++
-        return radius()
+    private fun step(originMove: Int, endpointMove: Int): Int {
+        origin.location.increment(originMove)
+        endpoint.location.increment(endpointMove)
+
+        if (originMove == endpointMove) return 0
+
+        val originRadialEffect = if (ray[originMove]-- > BigInteger.ZERO) -1 else +1
+        val endpointRadialEffect = if (ray[endpointMove]++ < BigInteger.ZERO) -1 else +1
+        return originRadialEffect + endpointRadialEffect / 2
     }
 }
