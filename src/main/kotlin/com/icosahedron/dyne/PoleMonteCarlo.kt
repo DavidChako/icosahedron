@@ -3,27 +3,28 @@ package com.icosahedron.dyne
 import mu.KotlinLogging
 import java.util.*
 
-data class PoleMonteCarlo(val pole: Pole, val runCount: Int, val stepCount: Int, val random: Random = Random()) {
+data class PoleMonteCarlo(val initialPole: Pole, val runCount: Int, val stepCount: Int, val random: Random = Random()) {
     private val logger = KotlinLogging.logger {}
     private val radiusDelta = Array(stepCount + 1) { IntArray(2*stepCount + 1) }
 
     fun run() {
         val start = System.currentTimeMillis()
-        logger.info { "Started $runCount runs of $stepCount steps with initial pole: $pole"}
+        logger.info { "Started $runCount runs of $stepCount steps with initial pole: $initialPole"}
 
         repeat(runCount) {
+            val pole = Pole(initialPole)
             var offset = stepCount
             ++radiusDelta[0][offset]
 
             (1..stepCount).forEach { step ->
-                offset += pole.step(random)
+                offset += pole.step()
                 ++radiusDelta[step][offset]
             }
         }
 
         val elapsed = System.currentTimeMillis() - start
         println(radiusDelta[0].joinToString(","))
-        logger.info { "Finished $runCount runs of $stepCount steps in $elapsed millis with final pole: $pole"}
+        logger.info { "Finished $runCount runs of $stepCount steps in $elapsed millis with initial pole: $initialPole"}
         logger.info { "*** Radius Delta Histogram:\n" + radiusDeltaHistogram() }
     }
 

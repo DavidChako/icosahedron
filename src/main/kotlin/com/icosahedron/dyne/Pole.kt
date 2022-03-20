@@ -1,16 +1,10 @@
 package com.icosahedron.dyne
 
-import java.math.BigInteger
-import java.util.*
+import kotlin.random.Random
 
 data class Pole(val origin: Event, val endpoint: Event) {
     companion object {
-        val TWO: BigInteger = BigInteger.valueOf(2)
-
-        fun pick(bound: BigInteger, random: Random = Random()): BigInteger {
-            val candidate = BigInteger(bound.bitLength(), random)
-            return if (candidate < bound) candidate else pick(bound, random)
-        }
+        fun pick(bound: Long): Long = Random.nextLong(0, bound)
     }
 
     init {
@@ -20,9 +14,11 @@ data class Pole(val origin: Event, val endpoint: Event) {
 
     private val ray = Array(4) { n -> endpoint.location[n] - origin.location[n] }
 
-    fun step(random: Random = Random()): Int {
+    constructor(pole: Pole): this(Event(pole.origin), Event(pole.endpoint))
+
+    fun step(): Int {
         val bound = origin.frequency() * endpoint.frequency()
-        var discriminant = pick(bound, random)
+        var discriminant = Random.nextLong(0, bound)
 
         origin.inertia.forEachIndexed { originMove, originFactor ->
             endpoint.inertia.forEachIndexed { endpointMove, endpointFactor ->
@@ -41,8 +37,8 @@ data class Pole(val origin: Event, val endpoint: Event) {
 
         if (originMove == endpointMove) return 0
 
-        val originRadialEffect = if (ray[originMove]-- > BigInteger.ZERO) -1 else +1
-        val endpointRadialEffect = if (ray[endpointMove]++ < BigInteger.ZERO) -1 else +1
-        return originRadialEffect + endpointRadialEffect / 2
+        val originRadialEffect = if (ray[originMove]-- > 0) -1 else +1
+        val endpointRadialEffect = if (ray[endpointMove]++ < 0) -1 else +1
+        return (originRadialEffect + endpointRadialEffect) / 2
     }
 }

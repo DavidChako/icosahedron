@@ -4,11 +4,14 @@ import kotlin.test.Test
 
 class PoleTest {
     @Test fun `monte carlo pole evolution in absence of force`() {
-        val originEvent = Event(Tetray(10, 10, 10, 10), Tetray(10, 10, 10, 10))
-        val endpointEvent = Event(Tetray(20, 10, 10, 0), Tetray(10, 10, 10, 10))
+//        val originEvent = Event(Tetray(10, 10, 10, 10), Tetray(10, 10, 10, 10))
+//        val endpointEvent = Event(Tetray(20, 10, 10, 0), Tetray(10, 10, 10, 10))
+        val originEvent = Event(Tetray(1, 1, 1, 1), Tetray(1, 1, 1, 1))
+        val endpointEvent = Event(Tetray(2, 1, 1, 0), Tetray(1, 1, 1, 1))
+
         val pole = Pole(originEvent, endpointEvent)
-        val runCount = 1000000
-        val stepCount = 20
+        val runCount = 1000000000
+        val stepCount = 1
         val monteCarlo = PoleMonteCarlo(pole, runCount, stepCount)
         monteCarlo.run()
     }

@@ -1,6 +1,8 @@
 package com.icosahedron.dyne
 
 data class Event(val location: Tetray, val inertia: Tetray) {
+    constructor(event: Event) : this(Tetray(event.location), Tetray(event.inertia))
+
     override fun toString() = "$inertia@$location"
 
     fun shell() = location.sum()

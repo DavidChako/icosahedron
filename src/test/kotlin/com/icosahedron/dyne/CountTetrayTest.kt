@@ -1,5 +1,6 @@
 package com.icosahedron.dyne
 
+import com.icosahedron.common.Count
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals

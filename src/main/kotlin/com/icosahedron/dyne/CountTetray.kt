@@ -1,5 +1,7 @@
 package com.icosahedron.dyne
 
+import com.icosahedron.common.Count
+
 data class CountTetray constructor(val x0: Count, val x1: Count, val x2: Count, val x3: Count) {
     constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(Count(x0), Count(x1), Count(x2), Count(x3))
 
