@@ -1,5 +1,7 @@
 package com.icosahedron.dyne
 
+import com.icosahedron.common.Tetray
+
 data class Event(val location: Tetray, val inertia: Tetray) {
     constructor(event: Event) : this(Tetray(event.location), Tetray(event.inertia))
 

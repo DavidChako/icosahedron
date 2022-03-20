@@ -1,5 +1,6 @@
 package com.icosahedron.dyne
 
+import com.icosahedron.common.Tetray
 import kotlin.test.Test
 
 class PoleTest {

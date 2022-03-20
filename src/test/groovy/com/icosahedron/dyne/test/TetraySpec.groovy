@@ -1,23 +1,39 @@
-package com.icosahedron.dyne
+package com.icosahedron.dyne.test
 
 import com.icosahedron.common.BigCount
 import com.icosahedron.common.Tetray
-import kotlin.random.Random
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNotEquals
+import com.icosahedron.common.random.KotlinRandomGenerator
+import spock.lang.Specification
 
-class CountTetrayTest {
-    private val n0 = Random.nextInt(0, Int.MAX_VALUE)
-    private val n1 = Random.nextInt(0, Int.MAX_VALUE)
-    private val n2 = Random.nextInt(0, Int.MAX_VALUE)
-    private val n3 = Random.nextInt(0, Int.MAX_VALUE)
+class TetraySpec extends Specification {
+    def randomGenerator = new KotlinRandomGenerator()
 
-    private val x0 = BigCount(n0)
-    private val x1 = BigCount(n1)
-    private val x2 = BigCount(n2)
-    private val x3 = BigCount(n3)
+//    def n0 = randomGenerator.nextInt(0, Int.MAX_VALUE)
+//    private val n1 = Random.nextInt(0, Int.MAX_VALUE)
+//    private val n2 = Random.nextInt(0, Int.MAX_VALUE)
+//    private val n3 = Random.nextInt(0, Int.MAX_VALUE)
+//
+//    private val x0 = BigCount(n0)
+//    private val x1 = BigCount(n1)
+//    private val x2 = BigCount(n2)
+//    private val x3 = BigCount(n3)
+
+    def "fail init if array size is not four"() {
+        given:
+        def array = (1..arraySize).collect { randomGenerator.nextLong() }
+
+        when:
+        new Tetray(array)
+
+        then:
+        def expected = thrown(IllegalArgumentException)
+        expected.cause == null
+        expected.message == 'Value=' + value + ' is negative'
+
+        where:
+        arraySize << (1..10).collect { it } - [4]
+    }
+
 
     @Test fun `tetray equals`() {
         assertEquals(Tetray(n0, n1, n2, n3), Tetray(n0, n1, n2, n3))

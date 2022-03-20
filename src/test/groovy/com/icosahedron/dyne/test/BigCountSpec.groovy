@@ -1,18 +1,31 @@
 package com.icosahedron.dyne.test
 
 import com.icosahedron.common.random.KotlinRandomGenerator
-import com.icosahedron.common.Count
+import com.icosahedron.common.BigCount
 import spock.lang.Specification
 
-final class CountSpec extends Specification {
+final class BigCountSpec extends Specification {
     def randomGenerator = new KotlinRandomGenerator()
+
+    def "fail init if count is negative"() {
+        given:
+        def value = randomGenerator.nextInt(Integer.MIN_VALUE, 0)
+
+        when:
+        new BigCount(value)
+
+        then:
+        def expected = thrown(IllegalArgumentException)
+        expected.cause == null
+        expected.message == 'Value=' + value + ' is negative'
+    }
 
     def "construct from BigInteger"() {
         given:
         def value = randomGenerator.nextInt(0, Integer.MAX_VALUE).toBigInteger()
 
         when:
-        def count = new Count(value)
+        def count = new BigCount(value)
 
         then:
         count.value == value
@@ -23,23 +36,10 @@ final class CountSpec extends Specification {
         def value = randomGenerator.nextInt(0, Integer.MAX_VALUE)
 
         when:
-        def count = new Count(value)
+        def count = new BigCount(value)
 
         then:
-        count == new Count(value.toBigInteger())
-    }
-
-    def "fail init if count is negative"() {
-        given:
-        def value = randomGenerator.nextInt(Integer.MIN_VALUE, 0)
-
-        when:
-        new Count(value)
-
-        then:
-        def expected = thrown(IllegalArgumentException)
-        expected.cause == null
-        expected.message == 'Value=' + value + ' is negative'
+        count == new BigCount(value.toBigInteger())
     }
 
     def "to string"() {
@@ -47,7 +47,7 @@ final class CountSpec extends Specification {
         def value = randomGenerator.nextInt(0, Integer.MAX_VALUE)
 
         when:
-        def count = new Count(value)
+        def count = new BigCount(value)
 
         then:
         count.toString() == Integer.toString(value)
@@ -59,10 +59,10 @@ final class CountSpec extends Specification {
         def addend = 0 //randomGenerator.nextInt(0, Integer.MAX_VALUE)
 
         when:
-        def count = new Count(value) + new Count(addend)
+        def count = new BigCount(value) + new BigCount(addend)
 
         then:
-        count == new Count(value + addend)
+        count == new BigCount(value + addend)
     }
 
     def "plus one"() {
@@ -70,10 +70,10 @@ final class CountSpec extends Specification {
         def value = randomGenerator.nextInt(0, Integer.MAX_VALUE)
 
         when:
-        def count = new Count(value).plusOne()
+        def count = new BigCount(value).plusOne()
 
         then:
-        count == new Count(value + BigInteger.ONE)
+        count == new BigCount(value + BigInteger.ONE)
     }
 
     def "minus one"() {
@@ -81,10 +81,10 @@ final class CountSpec extends Specification {
         def value = randomGenerator.nextInt(1, Integer.MAX_VALUE)
 
         when:
-        def count = new Count(value).minusOne()
+        def count = new BigCount(value).minusOne()
 
         then:
-        count == new Count(value - BigInteger.ONE)
+        count == new BigCount(value - BigInteger.ONE)
     }
 
     def "minus one throws if value is zero"() {
@@ -92,7 +92,7 @@ final class CountSpec extends Specification {
         def value = 0
 
         when:
-        new Count(value).minusOne()
+        new BigCount(value).minusOne()
 
         then:
         def expected = thrown(IllegalStateException)

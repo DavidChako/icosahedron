@@ -1,9 +1,9 @@
 package com.icosahedron.dyne
 
-import com.icosahedron.common.Count
+import com.icosahedron.common.BigCount
 
-data class CountTetray constructor(val x0: Count, val x1: Count, val x2: Count, val x3: Count) {
-    constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(Count(x0), Count(x1), Count(x2), Count(x3))
+data class CountTetray constructor(val x0: BigCount, val x1: BigCount, val x2: BigCount, val x3: BigCount) {
+    constructor(x0: Int, x1: Int, x2: Int, x3: Int): this(BigCount(x0), BigCount(x1), BigCount(x2), BigCount(x3))
 
     fun shell() = x0 + x1 + x2 + x3
     override fun toString() = "$x0:$x1:$x2:$x3"
