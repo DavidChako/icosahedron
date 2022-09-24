@@ -3,6 +3,9 @@ package com.icosahedron.math
 import com.icosahedron.format.Format
 
 fun main() {
+    val stringToString = String::class.toString()
+    println(stringToString)
+
     println("Hello Math!")
     printFibonnaciNumbers()
     println("Goodbye Math!")
