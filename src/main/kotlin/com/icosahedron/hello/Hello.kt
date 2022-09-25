@@ -1,5 +1,6 @@
 package com.icosahedron.hello
 
+import mu.KLogger
 import mu.KotlinLogging
 
 class Hello(private val target: String) {
@@ -9,6 +10,6 @@ class Hello(private val target: String) {
     }
 
     companion object {
-        private val LOG = KotlinLogging.logger {}
+        private val LOG: KLogger = KotlinLogging.logger {}
     }
 }
