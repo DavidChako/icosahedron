@@ -1,12 +1,14 @@
 package com.icosahedron.example
 
-//import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-//fun main() = runBlocking {
-//    repeat(100_000) {
-//        launch {
-//           delay(5000L)
-//           print(".")
-//        }
-//    }
-//}
+fun main() = runBlocking {
+    repeat(100_000) {
+        launch {
+           delay(5000L)
+           print(".")
+        }
+    }
+}

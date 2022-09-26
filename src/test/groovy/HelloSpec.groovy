@@ -4,7 +4,6 @@ import ch.qos.logback.classic.Level
 import com.icosahedron.core.LogRecorder
 import com.icosahedron.core.ObjectManifest
 import com.icosahedron.hello.Hello
-import org.slf4j.LoggerFactory
 import spock.lang.Specification
 
 final class HelloSpec extends Specification {
