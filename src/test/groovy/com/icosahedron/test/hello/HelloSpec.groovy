@@ -1,7 +1,7 @@
-
+package com.icosahedron.test.hello
 
 import ch.qos.logback.classic.Level
-import com.icosahedron.core.LogRecorder
+import com.icosahedron.core.LogSpy
 import com.icosahedron.core.ObjectManifest
 import com.icosahedron.hello.Hello
 import spock.lang.Specification
@@ -10,7 +10,7 @@ final class HelloSpec extends Specification {
     def "constructor"() {
         def target = 'David'
 
-        def expectedManifest = ObjectManifest.expected( Hello, [
+        def expectedManifest = ObjectManifest.expected(Hello, [
                 target: target
         ])
 
@@ -28,18 +28,15 @@ final class HelloSpec extends Specification {
         def hello = new Hello(target)
 
         when:
-        String message
-        def loggingEvents = LogRecorder.record(Hello, Level.DEBUG) {
-            message = hello.sayHello()
-        }
+        def logSpy = new LogSpy(Hello, Level.DEBUG)
+        def message = logSpy.capture { hello.sayHello() }
 
         then:
-        message != null
         message == 'Hello ' + target + '!'
 
         and:
-        loggingEvents.size() == 1
-        loggingEvents.get(0).toString() == '[DEBUG] Saying hello to ' + target
+        logSpy.size == 1
+        logSpy.firstMessage == '[DEBUG] Saying hello to ' + target
 
         and:
         println message
