@@ -1,8 +1,9 @@
 package com.icosahedron.test.hello
 
 import ch.qos.logback.classic.Level
-import com.icosahedron.core.LogSpy
+import com.icosahedron.core.LogRecord
 import com.icosahedron.core.ObjectManifest
+import com.icosahedron.core.MemberAccess
 import com.icosahedron.hello.Hello
 import spock.lang.Specification
 
@@ -28,20 +29,25 @@ final class HelloSpec extends Specification {
         def hello = new Hello(target)
 
         when:
-        def logSpy = new LogSpy(Hello, Level.DEBUG)
-        def message = logSpy.capture { hello.sayHello() }
+        def logRecord = new LogRecord(Hello, Level.DEBUG)
+        def message = logRecord.capture { hello.sayHello() }
 
         then:
         message == 'Hello ' + target + '!'
 
         and:
-        logSpy.size == 1
-        logSpy.firstMessage == '[DEBUG] Saying hello to ' + target
+        logRecord.size == 1
+        logRecord.firstMessage == '[DEBUG] Saying hello to ' + target
 
         and:
         println message
 
         where:
         target << [ 'David', 'Maggie' ]
+    }
+
+    def "member props"() {
+        expect:
+        println new MemberAccess(Hello).fields
     }
 }
