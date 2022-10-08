@@ -3,15 +3,11 @@ package com.icosahedron.core
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
-import ch.qos.logback.core.Appender
-import ch.qos.logback.core.Context
-import ch.qos.logback.core.filter.Filter
-import ch.qos.logback.core.spi.FilterReply
-import ch.qos.logback.core.status.Status
+import com.icosahedron.core.stub.LogbackAppender
 import org.slf4j.LoggerFactory
 import java.lang.reflect.UndeclaredThrowableException
 
-class LogRecord(loggingClass: Class<out Any>, logLevel: Level) {
+class LogRecord(loggingClass: Class<out Any>, logLevel: Level): LogbackAppender() {
     private val logger: Logger = LoggerFactory.getLogger(loggingClass) as Logger
     private val appender: EventAppender = EventAppender(logLevel)
     private val events get() = appender.events
@@ -26,7 +22,9 @@ class LogRecord(loggingClass: Class<out Any>, logLevel: Level) {
     fun getLastMessage(): String = events.last().toString()
     fun messageAtOffset(offset: Int): String = events[offset].toString()
 
-    fun <T> capture(execution: () -> T?): T?  = try {
+    fun <T> capture(
+        execution: () -> T?
+    ): T? = try {
         appender.clear()
         logger.addAppender(appender)
         execution()
@@ -36,29 +34,9 @@ class LogRecord(loggingClass: Class<out Any>, logLevel: Level) {
         logger.detachAppender(appender)
     }
 
-    private class EventAppender(private val logLevel: Level) : Appender<ILoggingEvent> {
+    private class EventAppender(private val logLevel: Level) : LogbackAppender() {
         val events = mutableListOf<ILoggingEvent>()
         fun clear() { events.clear() }
         override fun doAppend(event: ILoggingEvent) { if (event.level.isGreaterOrEqual(logLevel)) events.add(event) }
-
-        // default implementations of unused methods
-        override fun start() {}
-        override fun stop() {}
-        override fun isStarted() = false
-        override fun setContext(context: Context?) {}
-        override fun getContext(): Context? = null
-        override fun addStatus(status: Status?) {}
-        override fun addInfo(msg: String?) {}
-        override fun addInfo(msg: String?, ex: Throwable?) {}
-        override fun addWarn(msg: String?) {}
-        override fun addWarn(msg: String?, ex: Throwable?) {}
-        override fun addError(msg: String?) {}
-        override fun addError(msg: String?, ex: Throwable?) {}
-        override fun addFilter(newFilter: Filter<ILoggingEvent>?) {}
-        override fun clearAllFilters() {}
-        override fun getCopyOfAttachedFiltersList(): MutableList<Filter<ILoggingEvent>>? = null
-        override fun getFilterChainDecision(event: ILoggingEvent?): FilterReply? = null
-        override fun getName(): String? = null
-        override fun setName(name: String?) {}
     }
 }

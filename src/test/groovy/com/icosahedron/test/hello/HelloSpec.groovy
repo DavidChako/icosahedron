@@ -2,8 +2,8 @@ package com.icosahedron.test.hello
 
 import ch.qos.logback.classic.Level
 import com.icosahedron.core.LogRecord
-import com.icosahedron.core.ObjectManifest
-import com.icosahedron.core.MemberAccess
+import com.icosahedron.core.TypeAccess
+import com.icosahedron.core.TypeManifest
 import com.icosahedron.hello.Hello
 import spock.lang.Specification
 
@@ -11,7 +11,7 @@ final class HelloSpec extends Specification {
     def "constructor"() {
         def target = 'David'
 
-        def expectedManifest = ObjectManifest.expected(Hello, [
+        def expectedManifest = TypeManifest.expected(Hello, [
                 target: target
         ])
 
@@ -19,7 +19,7 @@ final class HelloSpec extends Specification {
         def hello = new Hello(target)
 
         then:
-        def manifest = ObjectManifest.of(hello)
+        def manifest = TypeManifest.of(hello)
         println manifest
         manifest == expectedManifest
     }
@@ -44,10 +44,5 @@ final class HelloSpec extends Specification {
 
         where:
         target << [ 'David', 'Maggie' ]
-    }
-
-    def "member props"() {
-        expect:
-        println new MemberAccess(Hello).fields
     }
 }
