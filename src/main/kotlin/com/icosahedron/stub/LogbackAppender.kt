@@ -1,4 +1,4 @@
-package com.icosahedron.core.stub
+package com.icosahedron.stub
 
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.Appender

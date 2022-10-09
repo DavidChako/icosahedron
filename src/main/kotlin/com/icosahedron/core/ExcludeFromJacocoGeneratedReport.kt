@@ -2,9 +2,10 @@ package com.icosahedron.core
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(
+    AnnotationTarget.FILE,
     AnnotationTarget.CLASS,
+    AnnotationTarget.TYPE,
     AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY_GETTER,
-    AnnotationTarget.PROPERTY_SETTER
+    AnnotationTarget.PROPERTY
 )
 annotation class ExcludeFromJacocoGeneratedReport 

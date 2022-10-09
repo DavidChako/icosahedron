@@ -3,7 +3,7 @@ package com.icosahedron.core
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.Logger
 import ch.qos.logback.classic.spi.ILoggingEvent
-import com.icosahedron.core.stub.LogbackAppender
+import com.icosahedron.stub.LogbackAppender
 import org.slf4j.LoggerFactory
 import java.lang.reflect.UndeclaredThrowableException
 
