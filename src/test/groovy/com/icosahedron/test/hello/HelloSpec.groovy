@@ -2,7 +2,6 @@ package com.icosahedron.test.hello
 
 import ch.qos.logback.classic.Level
 import com.icosahedron.core.LogRecord
-import com.icosahedron.core.TypeAccess
 import com.icosahedron.core.TypeManifest
 import com.icosahedron.hello.Hello
 import spock.lang.Specification

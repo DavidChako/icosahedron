@@ -6,20 +6,24 @@ import ch.qos.logback.classic.spi.ILoggingEvent
 import com.icosahedron.stub.LogbackAppender
 import org.slf4j.LoggerFactory
 import java.lang.reflect.UndeclaredThrowableException
+import kotlin.reflect.KClass
 
 class LogRecord(loggingClass: Class<out Any>, logLevel: Level): LogbackAppender() {
+    constructor(loggingKClass: KClass<out Any>, logLevel: Level): this(loggingKClass.java, logLevel)
+
     private val logger: Logger = LoggerFactory.getLogger(loggingClass) as Logger
     private val appender: EventAppender = EventAppender(logLevel)
     private val events get() = appender.events
 
-    fun getEmpty(): Boolean = events.isEmpty()
-    fun getSize(): Int = events.size
-    fun getFirstEvent(): ILoggingEvent = events.first()
-    fun getLastEvent(): ILoggingEvent = events.last()
+    val empty get() = events.isEmpty()
+    val size get() = events.size
+    val firstEvent get() = events.first()
+    val lastEvent get() = events.last()
+    val messages get() = events.map { it.toString() }
+    val firstMessage get() = events.first().toString()
+    val lLastMessage get() = events.last().toString()
+
     fun eventAtOffset(offset: Int): ILoggingEvent = events[offset]
-    fun getMessages(): List<String> = events.map { it.toString() }
-    fun getFirstMessage(): String = events.first().toString()
-    fun getLastMessage(): String = events.last().toString()
     fun messageAtOffset(offset: Int): String = events[offset].toString()
 
     fun <T> capture(

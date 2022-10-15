@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import java.lang.reflect.Field
 import java.time.temporal.Temporal
 import java.util.TreeSet
+import kotlin.reflect.KClass
 
 object TypeManifest {
     private const val EMPTY_HIERARCHY = "{}"
@@ -30,7 +31,7 @@ object TypeManifest {
     @JvmStatic
     @JvmOverloads
     fun expected(
-        type: Class<Any>,
+        type: Class<out Any>,
         fields: Map<String, Any>,
         terminals: Set<Class<Any>> = setOf(),
         precursors: HashSet<Any> = HashSet(),
@@ -42,6 +43,13 @@ object TypeManifest {
         val hierarchy = expectedHierarchy(type, precursors, fields, terminals)
         return type.name + '\n' + PRETTY_GSON.toJson(hierarchy)
     }
+
+    fun expected(
+        type: KClass<out Any>,
+        fields: Map<String, Any>,
+        terminals: Set<Class<Any>> = setOf(),
+        precursors: HashSet<Any> = HashSet(),
+    ): String = expected(type.java, fields, terminals, precursors)
 
     private fun hierarchy(
         source: Any?,
