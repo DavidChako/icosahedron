@@ -1,16 +1,13 @@
 package com.icosahedron.core
 
 import ch.qos.logback.classic.Logger
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import java.lang.reflect.Field
 import java.time.temporal.Temporal
-import java.util.TreeSet
+import java.util.*
 import kotlin.reflect.KClass
 
 object TypeManifest {
     private const val EMPTY_HIERARCHY = "{}"
-    private val PRETTY_GSON: Gson = GsonBuilder().setPrettyPrinting().serializeNulls().create()
 
     @JvmStatic
     @JvmOverloads
@@ -24,7 +21,7 @@ object TypeManifest {
         val typeName = type.name
         val isEnum = typeIsEnum(type)
         val hierarchy = hierarchy(source, withLineage, terminals)
-        val hierarchyString = if (isEnum && hierarchy === source) "" else '\n' + PRETTY_GSON.toJson(hierarchy)
+        val hierarchyString = if (isEnum && hierarchy === source) "" else '\n' + TypeRender.prettyJsonString(hierarchy)
         return if (isEnum) "$typeName.$source$hierarchyString" else "$typeName$hierarchyString"
     }
 
@@ -41,7 +38,7 @@ object TypeManifest {
         }
 
         val hierarchy = expectedHierarchy(type, precursors, fields, terminals)
-        return type.name + '\n' + PRETTY_GSON.toJson(hierarchy)
+        return type.name + '\n' + TypeRender.prettyJsonString(hierarchy)
     }
 
     fun expected(

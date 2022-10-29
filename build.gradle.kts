@@ -7,20 +7,13 @@ plugins {
 group = "com.icosahedron"
 version = "1.0-SNAPSHOT"
 
-//val kotlinVersion = plugins
-//This is necessary to make the version accessible in other places
-val kotlinVersion by extra {
-    buildscript.configurations["classpath"]
-        .resolvedConfiguration.firstLevelModuleDependencies
-        .find { it.moduleName == "org.jetbrains.kotlin.jvm.gradle.plugin" }?.moduleVersion
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.20")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("com.google.code.gson:gson:2.9.1")
 
@@ -30,7 +23,7 @@ dependencies {
     @Suppress("GradlePackageUpdate")
     implementation("ch.qos.logback:logback-classic:1.2.11")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.7.20")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
     testImplementation("org.spockframework:spock-core:2.3-groovy-4.0")
 }
