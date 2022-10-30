@@ -1,3 +1,3 @@
 package com.icosahedron.data
 
-sealed class FieldType
+sealed interface Content

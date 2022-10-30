@@ -1,3 +1,3 @@
 package com.icosahedron.data
 
-class Field<T>
+sealed interface Context
